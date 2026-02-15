@@ -68,6 +68,35 @@ def randomNumsGenerator(dif):
 
     return num1, num2
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def stressTest():
     for dif in ["1","2","3"]:
         for i in range(1000):
@@ -82,5 +111,3 @@ def stressTest():
                 return
 
     print("Passed")
-
-stressTest()
