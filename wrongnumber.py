@@ -81,84 +81,40 @@ def gameLogic(n1, n2, guess):
 
     if guess < n1:
         return "higher"
-    
-print("Welcome to WrongNumber!")
 
-difficulty = difficultySelection()
-winNum, loseNum = randomNumsGenerator(difficulty)
-i = 1
+while True:    
+    print("Welcome to WrongNumber!")
 
-print(difficulty)
-print(winNum)
-print(loseNum)
+    difficulty = difficultySelection()
+    winNum, loseNum = randomNumsGenerator(difficulty)
+    i = 1
 
-while i < 8:
-    guess = input("Please Enter Your Guess: ")
-    i += 1
-    decision = gameLogic(winNum, loseNum, int(guess))
-    if decision == "lost":
-        print("You guessed the wrong number, you lose!")
-        break
-    if decision == "won":
-        print("You guessed the right number, you win!")
-        break
-    if decision == "lower":
-        print("Your guess was to high, try again")
-        continue
-    if decision == "higher":
-        print("Your guess was too low, try again")
-        continue
-    print(decision)
+    while i < 8:
+        guess = input("Please Enter Your Guess: ")
+        i += 1
+        decision = gameLogic(winNum, loseNum, int(guess))
+        if decision == "lost":
+            print("You guessed the wrong number, you lose!")
+            break
+        if decision == "won":
+            print("You guessed the right number, you win!")
+            break
+        if decision == "lower":
+            print("Your guess was to high, try again")
+            continue
+        if decision == "higher":
+            print("Your guess was too low, try again")
+            continue
+        print(decision)
 
-if i > 7:
-    print("You ran out of guesses, game over")
-else:
-    print("Please Choose an Option")
-    print("1. Play Again")
-    print("2. End Gamee")
-    selection = input("Please Enter 1 or 2: ")
-    if selection == "1":
-        print("cool")
-    if selection == "2":
-        SystemExit
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def stressTest():
-    for dif in ["1","2","3"]:
-        for i in range(1000):
-            n1, n2 = randomNumsGenerator(dif)
-
-            if not (1 <= n1 <= 100):
-                print("Invalid num1: ", n1)
-                return
-
-            if not (1 <= n2 <= 100):
-                print("Invalid num2: ", n2)
-                return
-
-    print("Passed")
+    if i > 7:
+        print("You ran out of guesses, game over")
+    else:
+        print("Please Choose an Option")
+        print("1. Play Again")
+        print("2. End Gamee")
+        selection = input("Please Enter 1 or 2: ")
+        if selection == "1":
+            continue
+        if selection == "2":
+            break
