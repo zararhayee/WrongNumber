@@ -1,12 +1,15 @@
 import random
+import os
 
 def difficultySelection ():
-    
-    print("Please Choose Your Difficulty")
-    print("1. Easy")
-    print("2. Medium")
-    print("3. Hard")
+    print(UNDERLINE + "Please Choose Your Difficulty\n" + RESET)
+    print(GREEN + "1. Easy")
+    print(YELLOW + "2. Medium")
+    print(RED + "3. Hard\n" + RESET)
     difficulty = input("Please Enter 1, 2, or 3: ")
+    if difficulty not in ["1", "2", "3"]:
+        print("That choice is invalid, please try again\n")
+        difficultySelection()
     
     return difficulty
 
@@ -82,9 +85,29 @@ def gameLogic(n1, n2, guess):
     if guess < n1:
         return "higher"
 
-while True:    
-    print("Welcome to WrongNumber!")
+def clearScreen():
+    os.system("cls")
 
+def centerText(text):
+    width = os.get_terminal_size().columns
+    padding = (width - len(text)) // 2
+    print(" " * padding + text)
+
+#FORMATTING
+BOLD = "\033[1m"
+UNDERLINE = "\033[4m"
+RESET = "\033[0m"
+
+#COLORS
+RED = "\033[91m"
+GREEN = "\033[92m"
+YELLOW = "\033[93m"
+CYAN = "\033[96m"
+
+clearScreen()
+centerText(BOLD + CYAN + "Welcome to WrongNumber!\n" + RESET)
+
+while True:    
     difficulty = difficultySelection()
     winNum, loseNum = randomNumsGenerator(difficulty)
     i = 1
@@ -94,10 +117,12 @@ while True:
         i += 1
         decision = gameLogic(winNum, loseNum, int(guess))
         if decision == "lost":
-            print("You guessed the wrong number, you lose!")
+            clearScreen()
+            centerText(BOLD + RED + "You guessed the wrong number, you lose!" + RESET)
             break
         if decision == "won":
-            print("You guessed the right number, you win!")
+            clearScreen()
+            centerText(BOLD + GREEN + "You guessed the right number, you win!" + RESET)
             break
         if decision == "lower":
             print("Your guess was to high, try again")
@@ -108,13 +133,17 @@ while True:
         print(decision)
 
     if i > 7:
-        print("You ran out of guesses, game over")
-    else:
-        print("Please Choose an Option")
-        print("1. Play Again")
-        print("2. End Gamee")
-        selection = input("Please Enter 1 or 2: ")
-        if selection == "1":
-            continue
-        if selection == "2":
-            break
+        clearScreen()
+        centerText(RED + "You ran out of guesses, game over\n")
+        centerText(CYAN + "The winning number was " + winNum + "\n" + RESET)
+    
+    print(UNDERLINE + "Please Choose an Option\n" + RESET)
+    print("1. Play Again")
+    print("2. End Gamee\n")
+    selection = input("Please Enter 1 or 2: ")
+        
+    if selection == "1":
+        clearScreen()
+        continue
+    if selection == "2":
+        break
