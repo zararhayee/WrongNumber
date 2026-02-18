@@ -1,1 +1,10 @@
 # WrongNumber
+
+## Game Mechanics
+In this game you will need to guess the correct number. The range of the number is between 1 and 100. The number will never be 0. But be careful as there is another number that if guessed will cause you to lose the game immediately. These numbers are called the winning and losing numbers respectively. You will get 10 guesses and the computer will tell you higher or lower after each guess assuming you did not guess the losing number. There will be three difficulties, easy, medium, and hard. The difficulty will determine how close together the winning and losing numbers are. With easy difficulty having the numbers quite far apart, and the hard difficulty having the numbers within 5 to 10 numbers of each other.
+
+## How to Run
+Download and install the latest version of python, minimum 3.13.12. Open up your terminal of choice and navigate to the directory that contains the "wrongnumber.py" file. Then type "python wrongnumber.py", or if that doesnt work try "python3 wrongnumber.py". The game will start
+
+## How to Play
+Start the program by running it from the terminal. The terminal screen will be cleared and there will be an option where you can select the difficulty. Computer will tell you how many guesses you have and also tell you good luck. Then the computer will have you input your first guess. After guessing the computer will tell you whether your guess is higher or lower than the winning number. It will then display how many guesses you have left. If you guess the losing number the computer will clear the screen and tell you that the game has been lost. After receiving guess feedback you will be asked to guess again. This cycle will continue until you run out of guesses, guess the losing number, or guess the winning number and win the game, at which point the game will end and allow you to quit or play again.
