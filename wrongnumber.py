@@ -137,10 +137,12 @@ centerText(BOLD + CYAN + "Welcome to WrongNumber!\n" + RESET)
 #Main game loop
 while True:    
     difficulty = difficultySelection()
+    print(" ")
+    print("You chose have 10 guesses, Good Luck!\n" )
     numbers = randomNumsGenerator(difficulty)
     i = 0 #Number of guesses
 
-    while i < 11:
+    while i < 10:
         guessString = input("Please Enter Your Guess (1-100): ")
         
         #If someone wants to restart or exit game in the middle of gameplay, this will go straight to the end game menu
@@ -165,6 +167,7 @@ while True:
             continue
         
         i += 1
+        guessesRemaining = 10 - i
         decision = gameLogic(numbers.win, numbers.lose, guess)
         if decision == "lost":
             clearScreen()
@@ -179,14 +182,16 @@ while True:
             break
         if decision == "lower":
             print("Your guess was to high, try again")
+            print("You have " + str(guessesRemaining) + " guesses left")
             continue
         if decision == "higher":
             print("Your guess was too low, try again")
+            print("You have " + str(guessesRemaining) + " guesses left")
             continue
         print(decision)
 
     #Checking to see if number of guesses were exceeded
-    if i > 10:
+    if i > 9 and decision not in ["won", "lost"]:
         clearScreen()
         centerText(RED + "You ran out of guesses, game over")
         centerText(CYAN + "The winning number was " + str(numbers.win) + "\n" + RESET)
