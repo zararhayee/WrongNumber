@@ -85,7 +85,7 @@ def randomNumsGenerator(dif):
 
     return NumberPair(num1, num2)
 
-#Decides what to do with guess submitted by user
+#Decides what to feedback to return based on guess submitted by user
 def gameLogic(n1, n2, guess):
 
     if guess == n2:
@@ -116,7 +116,10 @@ def centerText(text):
     #Strips color and formatting codes
     cleanText = text.replace(CYAN, '').replace(GREEN, '').replace(YELLOW, '').replace(RED, '').replace(UNDERLINE, '').replace(BOLD, '').replace(RESET, '')
     
+    #Add spacing
     padding = (width - len(cleanText)) // 2
+
+    #Print final result
     print(" " * padding + text)
 
 #FORMATTING CODES
@@ -136,11 +139,17 @@ centerText(BOLD + CYAN + "Welcome to WrongNumber!\n" + RESET)
 
 #Main game loop
 while True:    
+    
+    #Set difficulty
     difficulty = difficultySelection()
     print(" ")
     print("You chose have 10 guesses, Good Luck!\n" )
+    
+    #Set wining and losing numbers
     numbers = randomNumsGenerator(difficulty)
-    i = 0 #Number of guesses
+    
+    #Number of guesses
+    i = 0 
 
     while i < 10:
         guessString = input("Please Enter Your Guess (1-100): ")
@@ -166,8 +175,13 @@ while True:
             print(RED + "Guess Invalid, Try again\n" + RESET)
             continue
         
+        #Increase number of guesses by 1
         i += 1
+
+        #Calculate remainng number of guesses to display
         guessesRemaining = 10 - i
+
+        #Sets the verdict returned by gameLogic function, then decides how to procceed based on verdict
         decision = gameLogic(numbers.win, numbers.lose, guess)
         if decision == "lost":
             clearScreen()
@@ -199,7 +213,7 @@ while True:
     #End game menu
     print(UNDERLINE + "Please Choose an Option\n" + RESET)
     print("1. Play Again")
-    print("2. End Gamee\n")
+    print("2. End Game\n")
     
     #Validation for end game menu choice
     while True:
@@ -213,5 +227,6 @@ while True:
             print(" ") 
             print(RED + "Invalid choice, try again\n" + RESET)
     
+    #Need to break again if ending game
     if selection == "2":
         break
