@@ -1,6 +1,12 @@
 import random
 import os
 
+#Custom data type for the win and lose numbers
+class NumberPair:
+    def __init__(self, win, lose):
+        self.win = win
+        self.lose = lose
+
 #Allows user to decide difficulty
 def difficultySelection ():
     print(UNDERLINE + "Please Choose Your Difficulty\n" + RESET)
@@ -11,7 +17,8 @@ def difficultySelection ():
     
     #Making sure input is valid through recursion
     if difficulty not in ["1", "2", "3"]:
-        print("That choice is invalid, please try again\n")
+        print(" ")
+        print(RED + "That choice is invalid, please try again\n" + RESET)
         difficultySelection()
     
     return difficulty
@@ -76,7 +83,7 @@ def randomNumsGenerator(dif):
             else:
                 num2 = random.randint(num1 - 10, num1 - 5)
 
-    return num1, num2
+    return NumberPair(num1, num2)
 
 #Decides what to do with guess submitted by user
 def gameLogic(n1, n2, guess):
@@ -130,27 +137,45 @@ centerText(BOLD + CYAN + "Welcome to WrongNumber!\n" + RESET)
 #Main game loop
 while True:    
     difficulty = difficultySelection()
-    winNum, loseNum = randomNumsGenerator(difficulty)
-    i = 1 #Number of guesses
+    numbers = randomNumsGenerator(difficulty)
+    i = 0 #Number of guesses
 
     while i < 11:
-        guess = input("Please Enter Your Guess (1-100): ")
+        guessString = input("Please Enter Your Guess (1-100): ")
+        
+        #If someone wants to restart or exit game in the middle of gameplay, this will go straight to the end game menu
+        if guessString.lower() == "exit":
+            print(" ")
+            break
 
         #Guess validation
-        if int(guess) < 1 or int(guess) > 100:
+        try:
+            guess = int(guessString)
+            
+            #If user enters a number outside of the range
+            if guess < 1 or guess > 100:
+                print("")
+                print(RED + "Guess Invalid, Try again\n" + RESET)
+                continue
+        
+        #If user enters a non number
+        except ValueError:
             print("")
             print(RED + "Guess Invalid, Try again\n" + RESET)
             continue
         
         i += 1
-        decision = gameLogic(winNum, loseNum, int(guess))
+        decision = gameLogic(numbers.win, numbers.lose, guess)
         if decision == "lost":
             clearScreen()
             centerText(BOLD + RED + "You guessed the wrong number, you lose!" + RESET)
             break
         if decision == "won":
             clearScreen()
-            centerText(BOLD + GREEN + "You guessed the right number in " + str(i) + " guesses, you win!" + RESET)
+            if i == 1:
+                centerText(BOLD + GREEN + "You guessed the right number in " + str(i) + " guess, you win!" + RESET)
+            else:
+                centerText(BOLD + GREEN + "You guessed the right number in " + str(i) + " guesses, you win!" + RESET)
             break
         if decision == "lower":
             print("Your guess was to high, try again")
@@ -164,15 +189,24 @@ while True:
     if i > 10:
         clearScreen()
         centerText(RED + "You ran out of guesses, game over")
-        centerText(CYAN + "The winning number was " + str(winNum) + "\n" + RESET)
+        centerText(CYAN + "The winning number was " + str(numbers.win) + "\n" + RESET)
     
     #End game menu
     print(UNDERLINE + "Please Choose an Option\n" + RESET)
     print("1. Play Again")
     print("2. End Gamee\n")
-    selection = input("Please Enter 1 or 2: ")    
-    if selection == "1":
-        clearScreen()
-        continue
+    
+    #Validation for end game menu choice
+    while True:
+        selection = input("Please Enter 1 or 2: ")    
+        if selection == "1":
+            clearScreen()
+            break
+        elif selection == "2":
+            break
+        else:
+            print(" ") 
+            print(RED + "Invalid choice, try again\n" + RESET)
+    
     if selection == "2":
         break
